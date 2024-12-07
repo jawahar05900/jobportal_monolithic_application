@@ -1,12 +1,33 @@
 package com.embarxx.firstspringdemo.Jobs;
 
+
+import com.embarxx.firstspringdemo.Companys.Company;
+import jakarta.annotation.Generated;
+import jakarta.persistence.*;
+import org.springframework.boot.autoconfigure.web.WebProperties;
+
+@Entity
 public class Job {
+
+    @Id
+    @GeneratedValue(strategy =GenerationType.IDENTITY)
     public long id;
     public String title;
     public String description;
     public String minsalary;
     public String maxsalary;
     public String location;
+
+
+    @ManyToOne
+    public Company company;
+
+    public Job(long id) {
+        this.id = id;
+    }
+
+    public Job() {
+    }
 
     public Job(long id, String title, String description, String minsalary, String maxsalary, String location) {
         this.id = id;
@@ -15,6 +36,14 @@ public class Job {
         this.minsalary = minsalary;
         this.maxsalary = maxsalary;
         this.location = location;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public String getDescription() {

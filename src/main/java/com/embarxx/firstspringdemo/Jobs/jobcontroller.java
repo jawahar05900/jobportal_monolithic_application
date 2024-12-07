@@ -17,7 +17,7 @@ public class jobcontroller {
 
     @GetMapping("/job")
     public ResponseEntity<List<Job>> findall(){
-        return ResponseEntity.ok(jobservice.findall());
+        return ResponseEntity.ok(jobservice.find());
     }
 
     @PostMapping("/job")
@@ -26,13 +26,17 @@ public class jobcontroller {
         return new ResponseEntity<>("jobadded success", HttpStatus.OK);
     }
 
-    @PostMapping("/job/{id}")
-    public ResponseEntity<Job> getjobbyid(@PathVariable long id){
-        Job jobs=jobservice.getjobbyid(id);
-        if(jobs!=null)
-            return new ResponseEntity<>(jobs,HttpStatus.OK);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/job/{id}")
+    public ResponseEntity<Job> getjobbyid(@PathVariable Long id){
+        Job job=jobservice.getjobbyid(id);
+        if(job!=null)
+            return new ResponseEntity<>(job,HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
+
 
     @DeleteMapping("/job/{id}")
     public ResponseEntity<String> deletejobbyid(@PathVariable long id){

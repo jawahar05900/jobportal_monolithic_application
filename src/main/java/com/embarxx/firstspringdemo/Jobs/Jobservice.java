@@ -3,7 +3,7 @@ package com.embarxx.firstspringdemo.Jobs;
 import java.util.List;
 
 public interface Jobservice {
-    List<Job> findall();
+    List<Job> find();
     void create(Job job);
     Job getjobbyid(long id);
     boolean deletejob (long id);
