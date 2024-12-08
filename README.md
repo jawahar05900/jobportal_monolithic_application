@@ -79,41 +79,8 @@ This project is licensed under the MIT License.
 
 
 Feel free to copy and customize this README file for your project. If you need further adjustments or additional details, just let me know!
-## 🌐 How to Access the Services
-Once the application is running, you can access the services at the following URLs:
 
-- **Job Service:** http://localhost:8081
-- **company Service:** http://localhost:8082
-- **review Service:** http://localhost:8083
-- **API Gateway:** http://localhost:8080 (Routes requests to the appropriate service)
-
-
-## 📈 Future Enhancements
-
-- **Real-Time Notifications:** Notify users about application status updates.
-- **Advanced Search & Filters:** Allow users to search jobs with detailed filters.
-- **Premium Features:** Integrate payment gateways for highlighted job postings.
-- **Logging & Monitoring:** Use tools like Prometheus and Grafana for enhanced observability.
-
-## 💡 Lessons Learned
-This project helped me gain expertise in:
-
-- Designing and implementing a **microservices architecture**.
-- Using **Spring Boot** for developing scalable REST APIs.
-- Managing **containerized deployments** using Docker and Kubernetes.
-
-## 📝 License
-This project is licensed under the MIT License. Feel free to use and modify it for your needs.
-
-## 👤 Author
-Jawahar J
-
-
-Copy this and save it as your `README.md` file. Let me know if you need further adjustments! 😊
-### Highlights:
-- All the required details are included in a visually appealing and organized structure.  
-- URLs for accessing services are clearly mentioned.  
-- Professional tone with concise and engaging descriptions.  
+  
 
 
 
