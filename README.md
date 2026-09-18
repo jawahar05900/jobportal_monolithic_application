@@ -1,87 +1,78 @@
+# Job Portal — Monolithic Application
 
+A Spring Boot REST API for a job portal, handling companies, job postings, and company reviews in a single service.
 
+## Tech Stack
 
-# 🌟 Job Portal Monolithic Application 🌟
+- **Java 17**
+- **Spring Boot 3.3.2**
+- **Spring Data JPA** (Hibernate)
+- **PostgreSQL** — primary database
+- **H2** — used during early local development (currently commented out in favor of PostgreSQL)
+- **Spring Boot Actuator** — health/monitoring endpoints
+- **Maven**
 
-## Project Description
-Welcome to the **Job Portal Monolithic Application (2024)**! This comprehensive job portal facilitates seamless matching of job seekers with employers. Featuring REST APIs designed with Spring Boot and integrated with H2/PostgreSQL databases, it achieves a **15% reduction in query latency**. Deployed using Docker and Kubernetes, the application offers real-time monitoring via Spring Boot Actuator.
+## Architecture
 
-## Key Features
-- 🏗️ **Monolithic Architecture**: Unified design for simplicity and ease of use.
-- 🚀 **RESTful APIs**: Efficient data handling using Spring Boot.
-- 🗄️ **Database Integration**: Supports H2 and PostgreSQL databases.
-- 🐳 **Containerization**: Docker for creating isolated environments.
-- ☸️ **Orchestration**: Managed with Kubernetes for deployment and scaling.
-- 📈 **Monitoring**: Real-time monitoring with Spring Boot Actuator.
+Single Spring Boot application, organized into three domain packages:
 
-## Installation
+- `Jobs` — job posting entity, controller, service, repository
+- `Companys` — company entity, controller, service, repository (a company has many jobs and many reviews)
+- `review` — company review entity, controller, service, repository (nested under a company)
 
-### Prerequisites
-- 📦 Java 11 or higher
-- 🐳 Docker
-- ☸️ Kubernetes
-- 🔧 Maven
+## API Endpoints
 
-### Steps
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/jawahar05900/jobportal_monolithic_application.git
-   cd jobportal_monolithic_application
-   ```
+### Jobs — `/job`
+| Method | Path | Description |
+|---|---|---|
+| GET | `/job` | Fetch all jobs |
+| POST | `/job` | Create a job |
+| GET | `/job/{id}` | Fetch a job by ID |
+| PUT | `/job/{id}` | Update a job |
+| DELETE | `/job/{id}` | Delete a job |
 
-2. **Build the project**:
-   ```bash
-   mvn clean install
-   ```
+### Companies — `/companies`
+| Method | Path | Description |
+|---|---|---|
+| GET | `/companies` | Fetch all companies |
+| POST | `/companies` | Create a company |
+| GET | `/companies/{id}` | Fetch a company by ID |
+| PUT | `/companies/{id}` | Update a company |
+| DELETE | `/companies/{id}` | Delete a company |
 
-3. **Build and run Docker containers**:
-   ```bash
-   docker-compose up --build
-   ```
+### Reviews — `/companies/{companyId}/reviews`
+| Method | Path | Description |
+|---|---|---|
+| GET | `/companies/{companyId}/reviews` | Fetch all reviews for a company |
+| POST | `/companies/{companyId}/reviews` | Create a review for a company |
+| GET | `/companies/{companyId}/reviews/{reviewId}` | Fetch a specific review |
+| PUT | `/companies/{companyId}/reviews/{reviewId}` | Update a review |
+| DELETE | `/companies/{companyId}/reviews/{reviewId}` | Delete a review |
 
-4. **Deploy to Kubernetes**:
-   ```bash
-   kubectl apply -f k8s/
-   ```
+./mvnw spring-boot:build-image
 
-## Usage
+This produces a runnable Docker image using the project's Maven configuration. An image built this way has been pushed to Docker Hub.
 
-1. **Access the application**:
-   - **Web Interface**: `http://localhost:8080`
+## Running Locally
 
-2. **API Endpoints**:
-   - `GET /api/job`: Fetches all job listings.
-   - `POST /api/job`: Creates a new job listing.
-   - `PUT /api/job/{id}`: Updates an existing job listing.
-   - `DELETE /api/job/{id}`: Deletes a job listing.
+1. Start PostgreSQL and pgAdmin via Docker Compose (this only runs the database, not the app itself):
+docker-compose up
 
-## Contributing
+2. Set the `DB_USERNAME` and `DB_PASSWORD` environment variables with your local PostgreSQL credentials.
+3. Run the application:
+./mvnw spring-boot:run
+4. The API is available at `http://localhost:8080`.
 
-1. **Fork the repository**.
-2. **Create a new branch**:
-   ```bash
-   git checkout -b feature-branch
-   ```
-3. **Make your changes**.
-4. **Commit your changes**:
-   ```bash
-   git commit -m 'Add new feature'
-   ```
-5. **Push to the branch**:
-   ```bash
-   git push origin feature-branch
-   ```
-6. **Open a pull request**.
+## Known Limitations / Roadmap
 
-## License
-This project is licensed under the MIT License.
+This is a learning project and is intentionally scoped. Not yet implemented:
 
+- No authentication or authorization (Spring Security / JWT)
+- No automated tests beyond the default Spring Boot context-load test
+- No CI/CD pipeline
 
+These are on the roadmap as the project evolves.
 
-Feel free to copy and customize this README file for your project. If you need further adjustments or additional details, just let me know!
+## Container Image
 
-  
-
-
-
-
+This application can be containerized using Spring Boot's built-in Cloud Native Buildpacks support (no Dockerfile required):
